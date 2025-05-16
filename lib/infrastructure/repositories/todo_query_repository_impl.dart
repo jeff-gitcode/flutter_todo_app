@@ -1,6 +1,7 @@
+import 'package:drift/drift.dart';
 import '../../domain/entities/todo.dart' as domain;
 import '../../domain/repositories/todo_query_repository.dart';
-import '../database/app_database.dart' as db;
+import '../database/app_database.dart';
 
 class TodoQueryRepositoryImpl implements TodoQueryRepository {
   final AppDatabase db;

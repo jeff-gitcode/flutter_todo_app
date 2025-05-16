@@ -1,18 +1,37 @@
-# 🧱 Flutter Clean Architecture Template
+# Flutter Clean Architecture Template
 
 This project is a **Flutter template** that strictly follows **Clean Architecture principles** with a **CQRS (Command Query Responsibility Segregation)** approach.
 
-## ✅ Features
+## System Architecture
+```mermaid
+sequenceDiagram
+    participant UI as User Interface (TodoPage)
+    participant VM as TodoViewModel
+    participant UC as Use Cases (AddTodo/UpdateTodo)
+    participant Repo as TodoCommandRepository
+    participant DB as AppDatabase (Drift)
 
-- 🧼 Domain, Application, Infrastructure, and Presentation layers
-- 🧠 CQRS: Separate Command & Query use cases
-- 💾 Drift ORM for local persistence
-- ⚙️ Dependency Injection via `get_it` and `injectable`
-- 🧪 Fully testable architecture
+    UI->>VM: User triggers Add/Update Todo
+    VM->>UC: Call AddTodo/UpdateTodo use case
+    UC->>Repo: Add/Update todo in repository
+    Repo->>DB: Insert/Update todo in database
+    DB-->>Repo: Acknowledgment
+    Repo-->>UC: Acknowledgment
+    UC-->>VM: Acknowledgment
+    VM-->>UI: Refresh UI with updated todos
+```
+
+## Features
+
+- Domain, Application, Infrastructure, and Presentation layers
+- CQRS: Separate Command & Query use cases
+- Drift ORM for local persistence
+- Dependency Injection via `get_it` and `injectable`
+- Fully testable architecture
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 lib/
@@ -26,7 +45,7 @@ lib/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Install Dependencies
 ```bash
@@ -72,13 +91,14 @@ flutter emulators --launch Medium_Phone_API_36.0
 
 ### 9. Run the App
 ```bash
-
 flutter run
+# or
+flutter run --enable-software-rendering
 ```
 
 ---
 
-## 🗃️ Technologies Used
+## Technologies Used
 
 - **Flutter**
 - **Drift** – SQLite ORM
@@ -87,7 +107,7 @@ flutter run
 
 ---
 
-## 🧩 Clean Architecture Overview
+## Clean Architecture Overview
 
 ### 1. Domain Layer
 - Pure Dart
@@ -103,11 +123,12 @@ flutter run
 
 ### 4. Presentation Layer
 - UI (Flutter widgets)
+- Shared AddTodoPage for adding and updating todos
 - Calls Use Cases through ViewModels or Bloc
 
 ---
 
-## 📌 Commands
+## Commands
 
 ### Add a new dependency
 ```bash
@@ -121,23 +142,12 @@ flutter pub run build_runner build --delete-conflicting-outputs
 
 ---
 
-## 🧪 Testing
+## Testing
 
 This architecture is built with testability in mind. Use cases and repositories can be easily unit tested by mocking interfaces in the `domain` layer.
 
 ---
 
-## 📬 Feedback
-
-If you'd like to integrate:
-- 🔄 Riverpod or Bloc
-- 🌐 REST API + RemoteDatasource
-- 🧪 Test examples
-
-Feel free to contribute or request an enhancement!
-
----
-
-## 📘 License
+## License
 
 MIT – use freely in commercial or personal projects.
