@@ -73,9 +73,10 @@ flutter devices
 Download and install Android Studio.
 
 ### 6. Set up an Android Emulator
+run Android Studio
 
 ### 7. Verify the emulator is available
-```
+```bash
 flutter emulators
 1 available emulator:
 
@@ -95,7 +96,9 @@ flutter run
 # or
 flutter run --enable-software-rendering
 ```
-
+---
+## Flutter Todo App Demo
+![Flutter Todo App Demo](doc/flutter-todo-app-demo.gif)
 ---
 
 ## Technologies Used
