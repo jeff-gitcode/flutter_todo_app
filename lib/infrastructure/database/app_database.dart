@@ -1,4 +1,3 @@
-
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'dart:io';
@@ -12,6 +11,9 @@ part 'app_database.g.dart';
 @DriftDatabase(tables: [Todos])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
+
+  // Add this named constructor for testing with a custom QueryExecutor
+  AppDatabase.forTesting(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 1;

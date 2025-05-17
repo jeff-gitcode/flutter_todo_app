@@ -149,6 +149,15 @@ flutter pub run build_runner build --delete-conflicting-outputs
 
 This architecture is built with testability in mind. Use cases and repositories can be easily unit tested by mocking interfaces in the `domain` layer.
 
+```bash
+# Ensure mockito and build_runner are in dev_dependencies
+flutter pub get
+
+# generate mock file
+flutter pub run build_runner build --delete-conflicting-outputs
+
+# run the test
+flutter test
 ---
 
 ## License
