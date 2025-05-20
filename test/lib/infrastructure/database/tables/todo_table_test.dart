@@ -1,5 +1,4 @@
 // dart
-import 'package:flutter_clean_architecture_todo_app/infrastructure/database/app_database.dart';
 import 'package:flutter_clean_architecture_todo_app/infrastructure/database/tables/todo_table.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';

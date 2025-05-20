@@ -3,7 +3,6 @@ import 'package:flutter_clean_architecture_todo_app/infrastructure/database/app_
 import 'package:flutter_clean_architecture_todo_app/infrastructure/repositories/todo_command_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/native.dart';
-import 'package:drift/drift.dart';
 
 void main() {
   late AppDatabase db;

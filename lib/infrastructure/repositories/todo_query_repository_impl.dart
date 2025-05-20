@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import '../../domain/entities/todo.dart' as domain;
 import '../../domain/repositories/todo_query_repository.dart';
 import '../database/app_database.dart';

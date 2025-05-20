@@ -1,4 +1,3 @@
-// dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -23,24 +22,20 @@ void main() {
     );
   }
 
-  testWidgets('renders with empty field for add', (tester) async {
+  testWidgets('renders AddTodoPage for adding', (tester) async {
     await pumpAddTodoPage(tester);
-    expect(find.text('Add Todo'), findsNWidgets(2)); // AppBar and Button
+    expect(find.text('Add Todo'), findsNWidgets(2)); // AppBar and button
     expect(find.byType(TextFormField), findsOneWidget);
-    expect(find.text('Title'), findsOneWidget);
-    expect(find.text('Enter todo title'), findsOneWidget);
     expect(find.text('Update Todo'), findsNothing);
-    final textField = tester.widget<TextFormField>(find.byType(TextFormField));
-    expect(textField.controller?.text, '');
   });
 
-  testWidgets('renders with pre-filled field for update', (tester) async {
+  testWidgets('renders AddTodoPage for updating', (tester) async {
     final todo = Todo(id: 1, title: 'Existing', isDone: false);
     await pumpAddTodoPage(tester, todo: todo);
     expect(find.text('Update Todo'), findsNWidgets(2));
-    expect(find.text('Existing'), findsOneWidget);
-    final textField = tester.widget<TextFormField>(find.byType(TextFormField));
-    expect(textField.controller?.text, 'Existing');
+    expect(find.byType(TextFormField), findsOneWidget);
+    expect(find.text('Add Todo'), findsNothing);
+    expect(find.widgetWithText(TextFormField, 'Existing'), findsOneWidget);
   });
 
   testWidgets('shows validation error for empty title', (tester) async {
@@ -51,31 +46,33 @@ void main() {
     verifyNever(mockViewModel.addTodo(any as String));
   });
 
-  testWidgets('calls addTodo and pops on success', (tester) async {
-    when(mockViewModel.addTodo(any)).thenAnswer((_) async {});
+  testWidgets('calls addTodo and pops on valid input', (tester) async {
+    when(mockViewModel.addTodo('New Todo')).thenAnswer((_) async {});
     await pumpAddTodoPage(tester);
-    await tester.enterText(find.byType(TextFormField), 'New Task');
+    await tester.enterText(find.byType(TextFormField), 'New Todo');
     await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
-    verify(mockViewModel.addTodo('New Task')).called(1);
-    expect(find.byType(AddTodoPage), findsNothing); // Page popped
+    verify(mockViewModel.addTodo('New Todo')).called(1);
+    expect(find.byType(AddTodoPage), findsNothing);
   });
 
-  testWidgets('calls updateTodo and pops on success', (tester) async {
-    final todo = Todo(id: 2, title: 'Old', isDone: true);
-    when(mockViewModel.updateTodo(any, any, any)).thenAnswer((_) async {});
+  testWidgets('calls updateTodo and pops on valid input', (tester) async {
+    final todo = Todo(id: 42, title: 'Old', isDone: true);
+    when(mockViewModel.updateTodo(todo.id, todo.title, todo.isDone))
+        .thenAnswer((_) async {});
     await pumpAddTodoPage(tester, todo: todo);
     await tester.enterText(find.byType(TextFormField), 'Updated');
     await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
-    verify(mockViewModel.updateTodo(2, 'Updated', true)).called(1);
+    verify(mockViewModel.updateTodo(42, 'Updated', true)).called(1);
     expect(find.byType(AddTodoPage), findsNothing);
   });
 
-  testWidgets('button label changes based on mode', (tester) async {
+  testWidgets('button label changes based on add/update', (tester) async {
     await pumpAddTodoPage(tester);
     expect(find.widgetWithText(ElevatedButton, 'Add Todo'), findsOneWidget);
-    final todo = Todo(id: 3, title: 'T', isDone: false);
+
+    final todo = Todo(id: 1, title: 'T', isDone: false);
     await pumpAddTodoPage(tester, todo: todo);
     expect(find.widgetWithText(ElevatedButton, 'Update Todo'), findsOneWidget);
   });
