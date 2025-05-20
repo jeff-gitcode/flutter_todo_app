@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_clean_architecture_todo_app/presentation/pages/add_todo_page.dart';
 import 'package:flutter_clean_architecture_todo_app/presentation/viewmodels/todo_viewmodel.dart';
 import 'package:flutter_clean_architecture_todo_app/domain/entities/todo.dart';
 
-class MockTodoViewModel extends Mock implements TodoViewModel {}
+@GenerateMocks([TodoViewModel])
+import 'add_todo_page_test.mocks.dart';
 
 void main() {
   late MockTodoViewModel mockViewModel;
@@ -43,11 +45,11 @@ void main() {
     await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
     expect(find.text('Title cannot be empty'), findsOneWidget);
-    verifyNever(mockViewModel.addTodo(isA<String>()));
+    verifyNever(mockViewModel.addTodo(argThat(isA<String>())));
   });
 
   testWidgets('calls addTodo and pops on valid input', (tester) async {
-    when(mockViewModel.addTodo('New Todo')).thenAnswer((_) async {});
+    when(mockViewModel.addTodo(any)).thenAnswer((_) async {});
     await pumpAddTodoPage(tester);
     await tester.enterText(find.byType(TextFormField), 'New Todo');
     await tester.tap(find.byType(ElevatedButton));
