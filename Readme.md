@@ -158,7 +158,16 @@ flutter pub run build_runner build --delete-conflicting-outputs
 
 # run the test
 flutter test
+
+# integration test
+flutter emulators --launch Medium_Phone_API_36.0
+
+flutter test integration_test/add_todo_integration_test.dart
+```
 ---
+
+## Flutter Todo App CRUD Integration Test
+![Flutter Todo App CRUD Integration Test](doc/flutter-todo-app-integration-test.gif)
 
 ## License
 

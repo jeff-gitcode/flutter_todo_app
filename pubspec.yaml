@@ -24,6 +24,8 @@ dev_dependencies:
   drift_dev: ^2.13.0
   injectable_generator: ^2.4.1
   mockito: ^5.4.6
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true

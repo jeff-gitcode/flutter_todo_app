@@ -43,7 +43,7 @@ void main() {
     await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
     expect(find.text('Title cannot be empty'), findsOneWidget);
-    verifyNever(mockViewModel.addTodo(any as String));
+    verifyNever(mockViewModel.addTodo(isA<String>()));
   });
 
   testWidgets('calls addTodo and pops on valid input', (tester) async {
